@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Visualize repository structure and explore blast radius in an interactive network graph." />
+  <title>GraphBuffviz · Repository intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="."><span class="brand-mark">✳</span> graphbuffviz</a>
+      <div class="topbar-meta"><span class="status-dot"></span> repository intelligence</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow">MAP THE CHANGE SURFACE</div>
+        <h1>See the <em>blast radius</em><br />before you ship.</h1>
+        <p class="lede">Turn any public Git repository into an interactive dependency map. Select a node to reveal what it touches, upstream and downstream.</p>
+        <form id="repo-form" class="repo-form">
+          <div class="input-wrap"><span class="input-icon">⌘</span><input id="repo-url" type="url" placeholder="https://github.com/owner/repository" value="https://github.com/JanVencl/graphbuffviz" required /><button type="submit">Analyze repository <span>→</span></button></div>
+          <div id="form-message" class="form-message"></div>
+        </form>
+      </section>
+
+      <section id="workspace" class="workspace is-hidden">
+        <div class="workspace-head"><div><div class="eyebrow">LIVE TOPOLOGY</div><h2 id="repo-name">Repository graph</h2></div><div class="legend"><span><i class="legend-dot core"></i> selected</span><span><i class="legend-dot direct"></i> direct impact</span><span><i class="legend-dot indirect"></i> indirect</span></div></div>
+        <div class="stats"><div><strong id="file-count">—</strong><span>files mapped</span></div><div><strong id="edge-count">—</strong><span>connections</span></div><div><strong id="risk-score">—</strong><span>impact score</span></div><div class="selected-stat"><span>FOCUS</span><strong id="selected-name">Click a node</strong></div></div>
+        <div class="graph-layout">
+          <div class="graph-card"><canvas id="graph" aria-label="Interactive repository network graph"></canvas><div class="graph-hint">Drag to explore · click a node to calculate blast radius</div><div id="loading" class="loading is-hidden"><span></span> Fetching repository topology…</div></div>
+          <aside class="inspector"><div class="inspector-label">BLAST RADIUS</div><div class="radius-number" id="radius-number">—<small>%</small></div><p id="radius-copy">Select a file in the graph to see the potential impact of a change.</p><div class="impact-bar"><span id="impact-fill"></span></div><div class="impact-list"><div><span class="impact-icon up">↑</span><div><b id="upstream-count">0</b><small>upstream dependencies</small></div></div><div><span class="impact-icon down">↓</span><div><b id="downstream-count">0</b><small>downstream dependents</small></div></div></div><div class="file-path" id="file-path">No node selected</div><button id="reset" class="ghost-button">Reset selection <span>↗</span></button></aside>
+        </div>
+      </section>
+
+      <section class="how"><div class="eyebrow">HOW IT WORKS</div><div class="steps"><article><span>01</span><h3>Paste a Git URL</h3><p>Start with any public GitHub repository. No installation or token required.</p></article><article><span>02</span><h3>Build the topology</h3><p>We map files, folders and inferred relationships into one navigable surface.</p></article><article><span>03</span><h3>Trace the impact</h3><p>Click any node to reveal its direct and indirect blast radius instantly.</p></article></div></section>
+    </main>
+    <footer><span>graphbuffviz / 2026</span><span>built for safer refactors</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
